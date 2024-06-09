@@ -1,0 +1,42 @@
+name: Build Services
+
+on:
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'service-one,service-two'
+        required: true
+      tag:
+        description: 'Tag for the image'
+        required: true
+        
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Build selected service
+      run: |
+        if [ "${{ github.event.inputs.service }}" == "service-one" ]; then
+          cd service-one
+          echo "Building Service One"
+          # npm install
+          # docker build -t service-one .
+        elif [ "${{ github.event.inputs.service }}" == "service-two" ]; then
+          cd service-two
+          echo "Building Service Two"
+          # npm install
+          # docker build -t service-two .
+        else
+          echo "Invalid service selected"
+          exit 1
+        fi
