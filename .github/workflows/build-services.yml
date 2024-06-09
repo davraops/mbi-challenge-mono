@@ -4,8 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       service:
-        description: 'service-one,service-two'
+        description: 'Service to Build'
         required: true
+        default: 'service-one'
+        type: choice
+        options:
+        - service-one
+        - service-two
       tag:
         description: 'Tag for the image'
         required: true
